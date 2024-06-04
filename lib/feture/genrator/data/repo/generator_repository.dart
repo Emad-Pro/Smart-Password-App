@@ -1,6 +1,6 @@
 import 'package:smart_password/feture/genrator/data/model/generator_password_model_get.dart';
 
-import '../../../../core/generator_password_service/generator_password_service.dart';
+import '../../../../core/service/generator_password_service.dart';
 import '../model/generator_password_model_result.dart';
 
 abstract class GeneratorPasswordRepository {

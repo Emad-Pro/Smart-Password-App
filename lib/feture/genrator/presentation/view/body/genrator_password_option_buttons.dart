@@ -32,7 +32,9 @@ class GenratorPasswordOptionButtons extends StatelessWidget {
                     const Spacer(),
                     MaterialButton(
                       color: Colors.teal,
-                      onPressed: () {},
+                      onPressed: () {
+                        genratorCubit.resetValue();
+                      },
                       child: Row(
                         children: [
                           const Icon(Icons.replay),
@@ -60,9 +62,11 @@ class GenratorPasswordOptionButtons extends StatelessWidget {
                   value: state.upperCaseValue,
                 ),
                 CustomChackButtonWidget(
-                  onChanged: (value) {
-                    genratorCubit.changelowerCaseValue(value!);
-                  },
+                  onChanged: state.lowerCaseIsEnable
+                      ? (value) {
+                          genratorCubit.changelowerCaseValue(value!);
+                        }
+                      : null,
                   title: "${"Lowercase".tr(context)} (a-z)",
                   value: state.lowerCaseValue,
                 ),

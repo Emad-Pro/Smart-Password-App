@@ -27,5 +27,10 @@
     "Medium strength password": "كلمة مرور متوسطة القوة",
     "Strong password": "كلمة سر قوية",
     "A very strong password": "كلمة مرور قوية جدًا",
-    "unbreakable password": "كلمة مرور غير قابلة للكسر"
+    "unbreakable password": "كلمة مرور غير قابلة للكسر",
+    "Copy completed successfully": "تم النسخ بنجاح",
+    "Remember: A strong password is an essential step to protecting your personal data and online accounts.": "تذكر: كلمة المرور القوية هي خطوة أساسية لحماية بياناتك الشخصية وحساباتك على الإنترنت.",
+    "Saved Passwod Successfly": "تم حفظ كلمة المرور بنجاح",
+    "Passwords Saved": "كلمة المرور المحفوظة",
+    "Here are all your saved passwords": "جميع كلمات المرور التي تم حفظها ستجدها هنا"
 }

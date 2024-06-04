@@ -9,6 +9,7 @@ class GenratorPasswordAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
+      pinned: true,
       title: Text("Smart Password".tr(context)),
       centerTitle: true,
     );

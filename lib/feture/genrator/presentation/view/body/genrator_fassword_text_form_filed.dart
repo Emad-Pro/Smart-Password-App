@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_password/core/AppLocalizations/app_localizations.dart';
 import 'package:smart_password/feture/genrator/presentation/view_model/cubit/generator_cubit.dart';
+
+import '../../../../../core/enum/request_state.dart';
 
 class GenratorPasswordTextFormFiled extends StatelessWidget {
   const GenratorPasswordTextFormFiled({
@@ -14,11 +17,7 @@ class GenratorPasswordTextFormFiled extends StatelessWidget {
       child: BlocBuilder<GeneratorCubit, GeneratorState>(
         builder: (context, state) {
           final generatorCubit = context.read<GeneratorCubit>();
-          final passowrdCheckValue = state.passwordResultModel;
-          if (state.passwordResultModel != null) {
-            generatorCubit.passwordTextEditingController.text =
-                state.passwordResultModel!.passwordValue!;
-          }
+          //    final passowrdCheckValue = state.passwordResultModel;
           return Container(
             margin: const EdgeInsets.all(10),
             padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 5),
@@ -28,17 +27,30 @@ class GenratorPasswordTextFormFiled extends StatelessWidget {
             child: Column(
               children: [
                 TextFormField(
+                  readOnly: true,
                   maxLines: 3,
                   controller: generatorCubit.passwordTextEditingController,
                   decoration: InputDecoration(
-                    suffixIcon: MaterialButton(
-                        minWidth: 0,
-                        height: 0,
-                        padding: EdgeInsets.zero,
-                        onPressed: () {},
-                        child: const Icon(
-                          Icons.copy,
-                        )),
+                    suffixIcon: state.requestPasswordState ==
+                            RequestState.success
+                        ? MaterialButton(
+                            minWidth: 0,
+                            height: 0,
+                            padding: EdgeInsets.zero,
+                            onPressed: () {
+                              Clipboard.setData(ClipboardData(
+                                      text: generatorCubit
+                                          .passwordTextEditingController.text))
+                                  .then((onValue) {
+                                generatorCubit.showInSnackBar(
+                                    "Copy completed successfully".tr(context),
+                                    context);
+                              });
+                            },
+                            child: const Icon(
+                              Icons.copy,
+                            ))
+                        : null,
                     hintText: "Create a strong password".tr(context),
                     border: InputBorder.none,
                   ),
@@ -47,16 +59,20 @@ class GenratorPasswordTextFormFiled extends StatelessWidget {
                   children: [
                     const Icon(Icons.info_outline),
                     Container(
+                        width: MediaQuery.of(context).size.width * 0.8,
                         margin: const EdgeInsetsDirectional.only(start: 5),
                         child: Text(
-                          passowrdCheckValue != null
-                              ? valueTextPassword(state
+                          state.requestPasswordState != RequestState.loading
+                              ? generatorCubit
+                                  .valueTextPassword(state
                                       .passwordResultModel!.passowrdCheckValue!)
                                   .tr(context)
-                              : "",
+                              : "Remember: A strong password is an essential step to protecting your personal data and online accounts."
+                                  .tr(context),
                           style: TextStyle(
-                              color: passowrdCheckValue != null
-                                  ? checkPasswordColor(state
+                              color: state.requestPasswordState !=
+                                      RequestState.loading
+                                  ? generatorCubit.checkPasswordColor(state
                                       .passwordResultModel!.passowrdCheckValue!)
                                   : null),
                         ))
@@ -69,28 +85,4 @@ class GenratorPasswordTextFormFiled extends StatelessWidget {
       ),
     );
   }
-}
-
-String valueTextPassword(double strength) {
-  return strength > 0.0 && strength <= 0.2
-      ? "Weak password"
-      : strength > 0.2 && strength <= 0.4
-          ? "Medium strength password"
-          : strength > 0.4 && strength <= 0.6
-              ? "Strong password"
-              : strength > 0.6 && strength <= 0.8
-                  ? "A very strong password"
-                  : "unbreakable password";
-}
-
-Color checkPasswordColor(double strength) {
-  return strength > 0.0 && strength <= 0.2
-      ? Colors.red
-      : strength > 0.2 && strength <= 0.4
-          ? Colors.yellow
-          : strength > 0.4 && strength <= 0.6
-              ? Colors.amber
-              : strength > 0.6 && strength <= 0.8
-                  ? Colors.orange
-                  : Colors.green;
 }

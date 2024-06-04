@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_password/core/AppLocalizations/app_localizations.dart';
 
 import '../../../../../core/widget/custom_listTile_widget.dart';
+import '../../../../passwords/presentation/view/passwords_screen.dart';
 import '../../../../settings/view_model/cubit/settings_cubit.dart';
 
 class DrawerProfileTileWidget extends StatelessWidget {
@@ -16,10 +17,11 @@ class DrawerProfileTileWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return FadeInDown(
       child: CustomListTileWidget(
-        icon: CupertinoIcons.profile_circled,
-        onTap: () {},
-        title: "Profile".tr(context),
-        subtitle: "Profile Details".tr(context),
+        icon: Icons.save,
+        onTap: () => Navigator.push(context,
+            MaterialPageRoute(builder: (context) => PasswordsSavedScreen())),
+        title: "Passwords Saved".tr(context),
+        subtitle: "Here are all your saved passwords".tr(context),
         color: Colors.blue[900],
         widget:
             BlocProvider.of<SettingsCubit>(context).locale!.languageCode == "en"
