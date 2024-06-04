@@ -16,15 +16,20 @@ extension GetPasswordsGenerationModelCollection on Isar {
 
 const PasswordsGenerationModelSchema = CollectionSchema(
   name: r'PasswordsGenerationModel',
-  id: 2093988437413654597,
+  id: 2093988454,
   properties: {
     r'dateTime': PropertySchema(
       id: 0,
       name: r'dateTime',
       type: IsarType.dateTime,
     ),
-    r'passwordText': PropertySchema(
+    r'passwordStrength': PropertySchema(
       id: 1,
+      name: r'passwordStrength',
+      type: IsarType.double,
+    ),
+    r'passwordText': PropertySchema(
+      id: 2,
       name: r'passwordText',
       type: IsarType.string,
     )
@@ -65,7 +70,8 @@ void _passwordsGenerationModelSerialize(
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeDateTime(offsets[0], object.dateTime);
-  writer.writeString(offsets[1], object.passwordText);
+  writer.writeDouble(offsets[1], object.passwordStrength);
+  writer.writeString(offsets[2], object.passwordText);
 }
 
 PasswordsGenerationModel _passwordsGenerationModelDeserialize(
@@ -77,7 +83,8 @@ PasswordsGenerationModel _passwordsGenerationModelDeserialize(
   final object = PasswordsGenerationModel();
   object.dateTime = reader.readDateTimeOrNull(offsets[0]);
   object.id = id;
-  object.passwordText = reader.readStringOrNull(offsets[1]);
+  object.passwordStrength = reader.readDoubleOrNull(offsets[1]);
+  object.passwordText = reader.readStringOrNull(offsets[2]);
   return object;
 }
 
@@ -91,6 +98,8 @@ P _passwordsGenerationModelDeserializeProp<P>(
     case 0:
       return (reader.readDateTimeOrNull(offset)) as P;
     case 1:
+      return (reader.readDoubleOrNull(offset)) as P;
+    case 2:
       return (reader.readStringOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -325,6 +334,90 @@ extension PasswordsGenerationModelQueryFilter on QueryBuilder<
   }
 
   QueryBuilder<PasswordsGenerationModel, PasswordsGenerationModel,
+      QAfterFilterCondition> passwordStrengthIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'passwordStrength',
+      ));
+    });
+  }
+
+  QueryBuilder<PasswordsGenerationModel, PasswordsGenerationModel,
+      QAfterFilterCondition> passwordStrengthIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'passwordStrength',
+      ));
+    });
+  }
+
+  QueryBuilder<PasswordsGenerationModel, PasswordsGenerationModel,
+      QAfterFilterCondition> passwordStrengthEqualTo(
+    double? value, {
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'passwordStrength',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<PasswordsGenerationModel, PasswordsGenerationModel,
+      QAfterFilterCondition> passwordStrengthGreaterThan(
+    double? value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'passwordStrength',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<PasswordsGenerationModel, PasswordsGenerationModel,
+      QAfterFilterCondition> passwordStrengthLessThan(
+    double? value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'passwordStrength',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<PasswordsGenerationModel, PasswordsGenerationModel,
+      QAfterFilterCondition> passwordStrengthBetween(
+    double? lower,
+    double? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'passwordStrength',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<PasswordsGenerationModel, PasswordsGenerationModel,
       QAfterFilterCondition> passwordTextIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -504,6 +597,20 @@ extension PasswordsGenerationModelQuerySortBy on QueryBuilder<
   }
 
   QueryBuilder<PasswordsGenerationModel, PasswordsGenerationModel, QAfterSortBy>
+      sortByPasswordStrength() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'passwordStrength', Sort.asc);
+    });
+  }
+
+  QueryBuilder<PasswordsGenerationModel, PasswordsGenerationModel, QAfterSortBy>
+      sortByPasswordStrengthDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'passwordStrength', Sort.desc);
+    });
+  }
+
+  QueryBuilder<PasswordsGenerationModel, PasswordsGenerationModel, QAfterSortBy>
       sortByPasswordText() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'passwordText', Sort.asc);
@@ -549,6 +656,20 @@ extension PasswordsGenerationModelQuerySortThenBy on QueryBuilder<
   }
 
   QueryBuilder<PasswordsGenerationModel, PasswordsGenerationModel, QAfterSortBy>
+      thenByPasswordStrength() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'passwordStrength', Sort.asc);
+    });
+  }
+
+  QueryBuilder<PasswordsGenerationModel, PasswordsGenerationModel, QAfterSortBy>
+      thenByPasswordStrengthDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'passwordStrength', Sort.desc);
+    });
+  }
+
+  QueryBuilder<PasswordsGenerationModel, PasswordsGenerationModel, QAfterSortBy>
       thenByPasswordText() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'passwordText', Sort.asc);
@@ -573,6 +694,13 @@ extension PasswordsGenerationModelQueryWhereDistinct on QueryBuilder<
   }
 
   QueryBuilder<PasswordsGenerationModel, PasswordsGenerationModel, QDistinct>
+      distinctByPasswordStrength() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'passwordStrength');
+    });
+  }
+
+  QueryBuilder<PasswordsGenerationModel, PasswordsGenerationModel, QDistinct>
       distinctByPasswordText({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'passwordText', caseSensitive: caseSensitive);
@@ -592,6 +720,13 @@ extension PasswordsGenerationModelQueryProperty on QueryBuilder<
       dateTimeProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'dateTime');
+    });
+  }
+
+  QueryBuilder<PasswordsGenerationModel, double?, QQueryOperations>
+      passwordStrengthProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'passwordStrength');
     });
   }
 

@@ -24,4 +24,12 @@ class IsarDatabase {
         .sortByDateTime()
         .findAll();
   }
+
+  Future<void> deleteAllData() async {
+    await isar.writeTxn(() => isar.passwordsGenerationModels.clear());
+  }
+
+  Future removeWithId(int id) async {
+    await isar.writeTxn(() => isar.passwordsGenerationModels.delete(id));
+  }
 }

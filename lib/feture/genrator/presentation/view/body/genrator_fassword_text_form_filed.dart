@@ -5,6 +5,9 @@ import 'package:smart_password/core/AppLocalizations/app_localizations.dart';
 import 'package:smart_password/feture/genrator/presentation/view_model/cubit/generator_cubit.dart';
 
 import '../../../../../core/enum/request_state.dart';
+import '../../../../../core/method/check_password_color.dart';
+import '../../../../../core/method/show_snake_bar.dart';
+import '../../../../../core/method/value_strength_password.dart';
 
 class GenratorPasswordTextFormFiled extends StatelessWidget {
   const GenratorPasswordTextFormFiled({
@@ -42,7 +45,7 @@ class GenratorPasswordTextFormFiled extends StatelessWidget {
                                       text: generatorCubit
                                           .passwordTextEditingController.text))
                                   .then((onValue) {
-                                generatorCubit.showInSnackBar(
+                                showInSnackBar(
                                     "Copy completed successfully".tr(context),
                                     context);
                               });
@@ -63,8 +66,7 @@ class GenratorPasswordTextFormFiled extends StatelessWidget {
                         margin: const EdgeInsetsDirectional.only(start: 5),
                         child: Text(
                           state.requestPasswordState != RequestState.loading
-                              ? generatorCubit
-                                  .valueTextPassword(state
+                              ? valueStrengthPassword(state
                                       .passwordResultModel!.passowrdCheckValue!)
                                   .tr(context)
                               : "Remember: A strong password is an essential step to protecting your personal data and online accounts."
@@ -72,7 +74,7 @@ class GenratorPasswordTextFormFiled extends StatelessWidget {
                           style: TextStyle(
                               color: state.requestPasswordState !=
                                       RequestState.loading
-                                  ? generatorCubit.checkPasswordColor(state
+                                  ? checkPasswordColor(state
                                       .passwordResultModel!.passowrdCheckValue!)
                                   : null),
                         ))

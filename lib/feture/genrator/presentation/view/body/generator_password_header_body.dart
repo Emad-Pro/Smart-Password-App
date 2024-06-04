@@ -1,8 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:smart_password/core/AppLocalizations/app_localizations.dart';
-import 'package:smart_password/core/database/model/isar_database.dart';
+import 'package:smart_password/core/database/isar/isar_database.dart';
 import 'package:smart_password/core/database/model/password_generation_model.dart';
 import 'package:smart_password/core/enum/request_state.dart';
 import 'package:smart_password/feture/genrator/presentation/view_model/cubit/generator_cubit.dart';
@@ -51,13 +52,15 @@ class GeneratorPasswordHeaderBody extends StatelessWidget {
                   },
                   icon: const Icon(Icons.replay_outlined),
                 ),
-                if (state.requestPasswordState != RequestState.loading)
-                  IconButton(
-                    onPressed: () {
-                      generatorCubit.savedPasswodToDatabase(context);
-                    },
-                    icon: const Icon(Icons.save),
-                  )
+                if (!kIsWeb)
+                  if (state.requestPasswordState != RequestState.loading)
+                    IconButton(
+                      onPressed: () {
+                        generatorCubit.savedPasswodToDatabase(
+                            state.passwordResultModel!, context);
+                      },
+                      icon: const Icon(Icons.save),
+                    )
               ],
             ),
           );

@@ -8,8 +8,8 @@ import '../../../../../core/widget/custom_listTile_widget.dart';
 import '../../../../passwords/presentation/view/passwords_screen.dart';
 import '../../../../settings/view_model/cubit/settings_cubit.dart';
 
-class DrawerProfileTileWidget extends StatelessWidget {
-  const DrawerProfileTileWidget({
+class DrawerSavedPasswordsTileWidget extends StatelessWidget {
+  const DrawerSavedPasswordsTileWidget({
     super.key,
   });
 
@@ -18,7 +18,9 @@ class DrawerProfileTileWidget extends StatelessWidget {
     return FadeInDown(
       child: CustomListTileWidget(
         icon: Icons.save,
-        onTap: () => Navigator.push(context,
+        onTap: () => Navigator.push(
+            context,
+            // ignore: prefer_const_constructors,
             MaterialPageRoute(builder: (context) => PasswordsSavedScreen())),
         title: "Passwords Saved".tr(context),
         subtitle: "Here are all your saved passwords".tr(context),

@@ -1,6 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:smart_password/core/AppLocalizations/app_localizations.dart';
 
@@ -16,17 +17,22 @@ class DrawerThemeTileWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FadeInLeft(
-        child: CustomListTileWidget(
-      icon: CupertinoIcons.moon_fill,
-      color: Colors.orange[900],
-      title: "Theme Mode".tr(context),
-      subtitle: "You can switch between light mode and dark mode".tr(context),
-      widget: Switch(
-          value: ThemeService.darkModeValue,
-          onChanged: (value) {
-            getIt<SettingsCubit>().changeThemeMode();
-          }),
-    ));
+    return BlocBuilder<SettingsCubit, SettingsState>(
+      builder: (context, state) {
+        return FadeInLeft(
+            child: CustomListTileWidget(
+          icon: CupertinoIcons.moon_fill,
+          color: Colors.orange[900],
+          title: "Theme Mode".tr(context),
+          subtitle:
+              "You can switch between light mode and dark mode".tr(context),
+          widget: Switch(
+              value: ThemeService.darkModeValue,
+              onChanged: (value) {
+                getIt<SettingsCubit>().changeThemeMode();
+              }),
+        ));
+      },
+    );
   }
 }

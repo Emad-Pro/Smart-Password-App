@@ -1,7 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:smart_password/core/database/model/isar_database.dart';
+import 'package:smart_password/core/database/isar/isar_database.dart';
 import 'package:smart_password/feture/genrator/presentation/view_model/cubit/generator_cubit.dart';
 import 'package:smart_password/feture/settings/view_model/cubit/settings_cubit.dart';
 
@@ -14,7 +15,9 @@ import 'feture/home/view/home_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await CacheHelper.init();
-  await IsarDatabase().initialize();
+  if (!kIsWeb) {
+    await IsarDatabase().initialize();
+  }
   ServiceLocator().init();
   await ThemeService.themeInit();
   runApp(const MyApp());

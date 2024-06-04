@@ -7,6 +7,10 @@ class DrawerHeaderTitleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const DrawerHeader(child: Center(child: Text("Smart Password")));
+    return const DrawerHeader(
+        child: Icon(
+      Icons.lock,
+      size: 45,
+    ));
   }
 }

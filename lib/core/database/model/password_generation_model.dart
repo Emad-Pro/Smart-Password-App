@@ -6,4 +6,5 @@ class PasswordsGenerationModel {
   Id id = Isar.autoIncrement;
   String? passwordText;
   DateTime? dateTime;
+  double? passwordStrength;
 }

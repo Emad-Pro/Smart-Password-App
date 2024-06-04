@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smart_password/core/AppLocalizations/app_localizations.dart';
 import 'package:smart_password/core/enum/request_state.dart';
 import 'package:smart_password/feture/passwords/presentation/view_model/cubit/passwords_saved_cubit.dart';
-
-import '../../../../core/database/model/password_generation_model.dart';
+import 'widget/build_list_view_item.dart';
 
 class PasswordsSavedScreen extends StatelessWidget {
-  const PasswordsSavedScreen({Key? key}) : super(key: key);
+  const PasswordsSavedScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,13 +17,21 @@ class PasswordsSavedScreen extends StatelessWidget {
           builder: (context, state) {
             switch (state.requestState) {
               case RequestState.loading:
-                return CircularProgressIndicator();
+                return const CircularProgressIndicator();
               case RequestState.success:
+                final passwordsSavedCubit = context.read<PasswordsSavedCubit>();
                 return CustomScrollView(
                   slivers: [
                     SliverAppBar(
                       centerTitle: true,
-                      title: Text("كلمات السر المحفوظة"),
+                      title: Text("Saved passwords".tr(context)),
+                      actions: [
+                        IconButton(
+                            onPressed: () {
+                              passwordsSavedCubit.clearAllPasswords();
+                            },
+                            icon: const Icon(Icons.clear_all))
+                      ],
                     ),
                     SliverList.builder(
                         itemCount: state.passwordsModel!.length,
@@ -34,33 +42,10 @@ class PasswordsSavedScreen extends StatelessWidget {
                   ],
                 );
               case RequestState.erorr:
-                return Text("some Erorr");
+                return const Text("some Erorr");
             }
           },
         ),
-      ),
-    );
-  }
-}
-
-class BuildListViewItem extends StatelessWidget {
-  const BuildListViewItem({super.key, required this.passwordsGenerationModel});
-  final PasswordsGenerationModel passwordsGenerationModel;
-  @override
-  Widget build(BuildContext context) {
-    final datetime = passwordsGenerationModel.dateTime!.toLocal();
-    final time = "${datetime.hour} : ${datetime.minute}";
-    final date = "${datetime.year} / ${datetime.month} / ${datetime.day}";
-    return ListTile(
-      title: Text(passwordsGenerationModel.passwordText!),
-      subtitle: Text(date),
-      leading: Container(
-        decoration: BoxDecoration(
-            color: Colors.teal, borderRadius: BorderRadius.circular(50)),
-        margin: EdgeInsets.all(5),
-        width: 60,
-        height: 60,
-        child: Center(child: Text(time)),
       ),
     );
   }
