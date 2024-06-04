@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:smart_password/core/AppLocalizations/app_localizations.dart';
-import 'package:smart_password/core/database/isar/isar_database.dart';
-import 'package:smart_password/core/database/model/password_generation_model.dart';
+
 import 'package:smart_password/core/enum/request_state.dart';
 import 'package:smart_password/feture/genrator/presentation/view_model/cubit/generator_cubit.dart';
 
